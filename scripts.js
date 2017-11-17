@@ -4,9 +4,11 @@ const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
 
-const redFilter = document.getElementById('red-effect')
-const rgbFilter = document.getElementById('rgb-split')
-const greenFilter = document.getElementById('green-screen')
+// const redFilter = document.getElementById('red-effect')
+// const rgbFilter = document.getElementById('rgb-split')
+// const greenFilter = document.getElementById('green-screen')
+
+let mode;
 
 
 
@@ -30,8 +32,11 @@ function paintToCanvas() {
   canvas.height = height
 
   return setInterval(() => {
+    filter = `${mode}`
     ctx.drawImage(video, 0, 0, width, height)
     let pixels = ctx.getImageData(0,0, width, height)
+
+    pixels = filter(pixels)
 
     // const redFilter = document.getElementById('red-effect').onclick = redEffect(pixels)
     // const rgbFilter = document.getElementById('rgb-split').onclick = rgbSplit(pixels)
@@ -46,7 +51,7 @@ function paintToCanvas() {
     // } else if (greenFilter){
     //   pixels = greenScreen(pixels)
     // }
-    pixels = greenScreen(pixels)
+    // pixels = redEffect(pixels)
     // ctx.globalAlpha = 0.8
     // put them back
     ctx.putImageData(pixels, 0, 0)
@@ -70,8 +75,8 @@ function takePhoto() {
 }
 
 function redEffect(pixels){
-  console.log('pressed');
-  console.log(pixels);
+  // console.log('pressed');
+  // console.log(pixels);
   // debugger
 
   for(let i = 0; i < pixels.data.length; i += 4){
@@ -84,12 +89,17 @@ function redEffect(pixels){
 
 function rgbSplit(pixels){
   console.log('pressed');
+  video.addEventListener('canplay', paintToCanvas)
+
+
+
   for(let i = 0; i < pixels.data.length; i += 4){
     pixels.data[i + 100] = pixels.data[i + 0]
     pixels.data[i - 100] = pixels.data[i + 1]
     pixels.data[i + 100] = pixels.data[i + 2]
   }
   return pixels
+  filter = rgbFilter
 }
 
 function greenScreen(pixels){

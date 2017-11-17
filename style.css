@@ -18,6 +18,10 @@ html {
   border-radius:4px;
 }
 
+.rgb {
+  display: block;
+}
+
 /*clearfix*/
 .photobooth:after {
   content: '';
@@ -25,15 +29,29 @@ html {
   clear: both;
 }
 
+button {
+  background-color: green;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  margin: 5px;
+  padding: 5px;
+}
+
+#record {
+  background-color: red;
+}
+
 .photo {
   width:75%;
   border-radius: 6px;
   float:left;
   margin: 10px;
+  max-width: 50%;
 }
 
 .controls {
-  width: 20%;
+  width: 40%;
   float: right;
   margin: 10px;
 }
